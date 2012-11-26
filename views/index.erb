@@ -2,8 +2,10 @@
   <body>
   <h1>Simple Echo & Chat Server</h1>
      <form id="form">
+       <input type="text" id="user" value="Name"></input>
        <input type="text" id="input" value="send a message"></input>
-  </form>
+       <input type="submit" value="Post" />
+     </form>
      <div id="msgs"></div>
   </body>
 
@@ -21,10 +23,13 @@
 
         var sender = function(f){
           var input     = document.getElementById('input');
+          var username  = document.getElementById('user');
+          var now       = new Date();
           input.onclick = function(){ input.value = "" };
+          username.onclick = function(){ username.value = "" };
           f.onsubmit    = function(){
-            ws.send(input.value);
-            input.value = "send a message";
+            ws.send(now.toTimeString() + " " + username.value + ': ' + input.value);
+            input.value = "";
             return false;
           }
         }(document.getElementById('form'));
